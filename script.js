@@ -10,7 +10,7 @@ const prevBtn = document.getElementById('prev');
 const playBtn = document.getElementById('play');
 const nextBtn = document.getElementById('next');
 
-// Music
+// Music //
 const songs = [
   {
     name: 'jacinto-1',
