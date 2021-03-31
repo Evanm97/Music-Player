@@ -1,5 +1,3 @@
-/* Images created by: https://unsplash.com/@pawel_czerwinski */
-
 @import url("https://fonts.googleapis.com/css?family=Spartan:400,700&display=swap");
 
 html {
@@ -9,20 +7,43 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-  background: #c9ced3;
+  background: url("https://cdn.wallpapersafari.com/5/1/LYKSli.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   font-family: Spartan, sans-serif;
   font-size: 12px;
 }
 
+#title1 {
+  /* padding: 35px; */
+  font-size: 35px;
+  font-family: "Varela Round", sans-serif;
+  color: #1db954;
+  letter-spacing: 5px;
+}
+#title-sub1 {
+  font-family: "Open Sans", sans-serif;
+  color: whitesmoke;
+  font-size: 20px;
+  letter-spacing: 0px;
+}
+
+.title-container {
+  width: 550px;
+  height: 150px;
+}
+
 .player-container {
-  height: 500px;
   width: 400px;
-  background: #e7e7e7;
-  border-radius: 20px;
-  box-shadow: 0 15px 30px 5px rgba(0, 0, 0, 0.3);
+  height: 500px;
+  box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
 }
 
 .img-container {
@@ -51,12 +72,34 @@ h3 {
   font-size: 20px;
   text-align: center;
   font-weight: 400;
-  margin: 5px 0 0;
+  margin: 10px 0 0;
+}
+
+.long-title {
+  font-size: 20px;
+  text-align: center;
+  margin: 0;
+}
+
+.title-holder {
+  height: 25px;
+
+}
+
+.artist-holder {
+  height: 20px;
+}
+
+.long-artist {
+  font-size: 15px;
+  text-align: center;
+  font-weight: 400;
+  margin: 10px 0 0;
 }
 
 /* Progress */
 .progress-container {
-  background: #fff;
+  background: lightslategray;
   border-radius: 5px;
   cursor: pointer;
   margin: 40px 20px;
@@ -65,7 +108,7 @@ h3 {
 }
 
 .progress {
-  background: #242323;
+  background: white;
   border-radius: 5px;
   height: 100%;
   width: 0%;
@@ -83,13 +126,22 @@ h3 {
 .player-controls {
   position: relative;
   top: -15px;
-  left: 120px;
-  width: 200px;
+  left: 50px;
+  width: 100%;
 }
 
 .fas {
   font-size: 30px;
-  color: rgb(129, 129, 129);
+  color: white;
+  margin-right: 30px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.fas.fa-redo,
+.fas.fa-random {
+  font-size: 30px;
+  color: pink;
   margin-right: 30px;
   cursor: pointer;
   user-select: none;
@@ -107,8 +159,25 @@ h3 {
 
 /* Media Query: iPhone (Vertical) */
 @media screen and (max-width: 376px) {
+  .title-container {
+    width: 85vh;
+  }
+
+  #title1 {
+    font-size: 20px;
+    font-family: "Varela Round", sans-serif;
+    color: #1db954;
+    letter-spacing: 5px;
+  }
+  #title-sub1 {
+    font-family: "Open Sans", sans-serif;
+    color: whitesmoke;
+    font-size: 15px;
+    letter-spacing: 0px;
+  }
+
   .player-container {
-    width: 95vw;
+    width: 80vw;
   }
 
   .img-container {

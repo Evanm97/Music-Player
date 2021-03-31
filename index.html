@@ -1,22 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Music Player</title>
-    <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css"/>
-    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css" />
+    <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
+
+    <div class="title-container">
+        <h1 id="title1">JS Music Player <span id="title-sub1">with Napster API <i class="fab fa-napster"></i></span>
+        </h1>
+    </div>
+
     <div class="player-container">
+
         <!-- Song -->
-        <div class="img-container">
-            <img src="img/jacinto-1.jpg" alt="Album Art">
+        <div class="img-container" id="img-container">
+            <img src="img/jacinto-1.jpg" alt="Album Art" />
         </div>
-        <h2 id="title">Electric Chill Machine</h2>
-        <h3 id="artist">Jacinto</h3>
-        <audio src="music/jacinto-1.mp3"></audio>
+
+        <div class="title-holder">
+            <h2 id="title"></h2>
+        </div>
+
+        <div class="artist-holder">
+            <h3 id="artist"></h3>
+        </div>
+
+        <audio>
+            <source src="music/jacinto-1.mp3" type="audio/mpeg" />
+            Your browser does not support the audio element.
+        </audio>
+
         <!-- Progress -->
         <div class="progress-container" id="progress-container">
             <div class="progress" id="progress"></div>
@@ -25,14 +45,19 @@
                 <span id="duration">2:06</span>
             </div>
         </div>
+
         <!-- Controls -->
         <div class="player-controls">
+            <i class="fas fa-random" id="shuffle" title="Shuffle"></i>
             <i class="fas fa-backward" id="prev" title="Previous"></i>
             <i class="fas fa-play main-button" id="play" title="Play"></i>
             <i class="fas fa-forward" id="next" title="Next"></i>
+            <i class="fas fa-redo" id="repeat" title="Repeat"></i>
         </div>
     </div>
+
     <!-- Script -->
     <script src="script.js"></script>
 </body>
+
 </html>
