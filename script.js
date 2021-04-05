@@ -2,6 +2,7 @@ const image = document.querySelector("img");
 const title = document.getElementById("title");
 const artist = document.getElementById("artist");
 const music = document.querySelector("audio");
+const genre = document.getElementById("genre");
 const currentTimeEl = document.getElementById("current-time");
 const durationEl = document.getElementById("duration");
 const progress = document.getElementById("progress");
@@ -11,15 +12,27 @@ const playBtn = document.getElementById("play");
 const nextBtn = document.getElementById("next");
 const shuffleBtn = document.getElementById("shuffle");
 const repeatBtn = document.getElementById("repeat");
+// const soundBtn = document.getElementById("volume");
+// const playlistBtn =document.getElementById("switch");
+const nextGenButton = document.getElementById("nextGenre");
+const prevGenButton = document.getElementById("prevGenre");
 
 // Booleans
 let shuffle = false;
 let repeat = false;
 let playing = false;
+let muted = false;
 
 let trackIndex = 0;
-const apiUrl =
-  "https://api.napster.com/v2.2/genres/g.398/tracks/top?apikey=MmU5NzI1NDctZWM0Zi00ZWVhLTg2YzMtNTIzNjNhNjRmMjI4";
+
+const API_KEY = "MmU5NzI1NDctZWM0Zi00ZWVhLTg2YzMtNTIzNjNhNjRmMjI4";
+
+let genreIndex = 0;
+const genreArray = ["Pop", "Electronic", "Indie-Pop", "Rock", "Pop-Punk", "Hip-Hop", "Alt-Punk"];
+const genreIds = [115, 71, 398, 5, 397, 146, 33];
+
+let apiUrl =
+  `https://api.napster.com/v2.2/genres/g.115/tracks/top?apikey=${API_KEY}`;
 let trackArray = [];
 
 // Play
@@ -41,10 +54,10 @@ function pauseSong() {
 // Update DOM
 function loadSongFromApiData(trackData) {
   if (trackData) {
-    console.log(trackData);
+    console.log("TRACK-DATA", trackData);
 
-    if (trackData.name.length > 22 || trackData.artistName.length > 25) {
-      reduceFontSize();
+    if (trackData.name.length > 20 || trackData.artistName.length > 25) {
+      reduceFontSize(trackData);
     } else {
       resetFontSize();
     }
@@ -52,24 +65,40 @@ function loadSongFromApiData(trackData) {
     title.textContent = trackData.name;
     artist.textContent = trackData.artistName;
 
+    genre.textContent = genreArray[genreIndex];
+
     music.src = trackData.previewURL;
     image.src = `http://direct.rhapsody.com/imageserver/v2/albums/${trackData.albumId}/images/300x300.jpg`;
+
   }
 }
 
-function reduceFontSize() {
-  title.classList.add("long-title");
-  artist.classList.add("long-artist");
+function fixImage() {
+  console.log("shit image")
+  image.src = "no-music-cover.png"
+}
+
+function reduceFontSize(trackData) {
+  if (trackData.name.length > 25 || trackData.artistName.length > 35) {
+    title.classList.add("xl-title");
+    artist.classList.add("long-artist");
+  } else {
+    title.classList.add("long-title");
+    artist.classList.add("long-artist");
+  }
 }
 
 function resetFontSize() {
   title.classList.remove("long-title");
   artist.classList.add("long-artist");
+  title.classList.remove("xl-title");
+  artist.classList.add("xl-artist");
 }
 
 //fetch songs
 async function fetchSongs(url) {
   let trackArr = [];
+  console.log(trackArr)
   try {
     const response = await fetch(url);
     trackArr = await response.json();
@@ -171,6 +200,43 @@ function setProgressBar(e) {
   music.currentTime = (clickX / width) * duration;
 }
 
+// function muteSound() {
+//   if (muted) {
+//     music.volume = 1;
+//     soundBtn.classList.replace("fa-volume-mute", "fa-volume-up");
+//     soundBtn.setAttribute("title", "Mute");
+//     muted = false;
+//   } else {
+//     music.volume = 0;
+//     soundBtn.classList.replace("fa-volume-up", "fa-volume-mute");
+//     soundBtn.setAttribute("title", "Unmute");
+//     muted = true;
+//   }
+// }
+
+
+function nextGenre() {
+  genreIndex < genreArray.length - 1 ? genreIndex++ : (genreIndex = 0);
+  apiUrl = `https://api.napster.com/v2.2/genres/g.${genreIds[genreIndex]}/tracks/top?apikey=${API_KEY}`;
+
+  trackArray = fetchSongs(apiUrl).then((trackArray) => {
+    loadSongFromApiData(trackArray[0]);
+    playSong();
+  });
+}
+
+
+function prevGenre() {
+  genreIndex <= 0 ? (genreIndex = genreArray.length - 1) : genreIndex--;
+  apiUrl = `https://api.napster.com/v2.2/genres/g.${genreIds[genreIndex]}/tracks/top?apikey=${API_KEY}`;
+
+  trackArray = fetchSongs(apiUrl).then((trackArray) => {
+    loadSongFromApiData(trackArray[0]);
+    playSong();
+  });
+}
+
+
 // Event Listeners
 music.addEventListener("ended", nextSong);
 music.addEventListener("timeupdate", updateProgressBar);
@@ -181,3 +247,6 @@ prevBtn.addEventListener("click", prevSong);
 nextBtn.addEventListener("click", nextSong);
 shuffleBtn.addEventListener("click", shuffleBoolean);
 repeatBtn.addEventListener("click", repeatBoolean);
+
+nextGenButton.addEventListener("click", nextGenre);
+prevGenButton.addEventListener("click", prevGenre);

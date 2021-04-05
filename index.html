@@ -21,7 +21,7 @@
 
         <!-- Song -->
         <div class="img-container" id="img-container">
-            <img src="img/jacinto-1.jpg" alt="Album Art" />
+            <img src="" onerror="fixImage()"/>
         </div>
 
         <div class="title-holder">
@@ -33,7 +33,7 @@
         </div>
 
         <audio>
-            <source src="music/jacinto-1.mp3" type="audio/mpeg" />
+            <source src="" type="audio/mpeg" />
             Your browser does not support the audio element.
         </audio>
 
@@ -53,6 +53,16 @@
             <i class="fas fa-play main-button" id="play" title="Play"></i>
             <i class="fas fa-forward" id="next" title="Next"></i>
             <i class="fas fa-redo" id="repeat" title="Repeat"></i>
+        </div>
+
+        <div class="extra-controls">
+            <!-- <i class="fas fa-volume-up" id="volume" title="Mute"></i>
+            <i class="fas fa-sliders-h" id="switch" title="Switch Playlist"></i> -->
+            <!-- <i class="fas fa-backward" id="prev" title="Previous"></i> -->
+            <i class="fas fa-angle-left" id="prevGenre" title="Previous Genre"></i>
+            <span id="genre"></span>
+            <i class="fas fa-angle-right" id="nextGenre" title="Next Genre"></i>
+            <!-- <i class="fas fa-forward" id="next" title="Next"></i> -->
         </div>
     </div>
 

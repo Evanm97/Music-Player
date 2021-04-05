@@ -38,10 +38,10 @@ body {
 }
 
 .player-container {
+  height: 525px;
   width: 400px;
-  height: 500px;
+  border-radius: 20px;
   box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
   background-color: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(10px);
 }
@@ -72,7 +72,7 @@ h3 {
   font-size: 20px;
   text-align: center;
   font-weight: 400;
-  margin: 10px 0 0;
+  margin: 5px 0 0;
 }
 
 .long-title {
@@ -88,6 +88,12 @@ h3 {
 
 .artist-holder {
   height: 20px;
+}
+
+.xl-title {
+  font-size: 15px;
+  text-align: center;
+  margin: 0;
 }
 
 .long-artist {
@@ -126,23 +132,59 @@ h3 {
 .player-controls {
   position: relative;
   top: -15px;
-  left: 50px;
   width: 100%;
+}
+
+.extra-controls {
+  position: relative;
+  margin-top: 5px;
+  width: 100%;
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+}
+
+#genre {
+  font-size: 25px;
+  color: white;
+  margin-left: 40px;
 }
 
 .fas {
   font-size: 30px;
   color: white;
-  margin-right: 30px;
+  margin-left: 40px;
   cursor: pointer;
   user-select: none;
+}
+
+.fas.fa-sliders-h {
+  font-size: 30px;
+  cursor: pointer;
+  user-select: none;
+
+}
+
+.fas.fa-angle-right {
+  font-size: 30px;
+  cursor: pointer;
+  user-select: none;
+  margin-right: 40px;
+}
+
+.fas.fa-volume-up, .fas.fa-volume-mute, .fas.fa-angle-left {
+  font-size: 30px;
+  cursor: pointer;
+  user-select: none;
+  /* margin-left: 50px; */
+  color: whitesmoke;
 }
 
 .fas.fa-redo,
 .fas.fa-random {
   font-size: 30px;
   color: pink;
-  margin-right: 30px;
+  /* margin-right: 30px; */
   cursor: pointer;
   user-select: none;
 }
@@ -157,43 +199,39 @@ h3 {
   top: 3px;
 }
 
-/* Media Query: iPhone (Vertical) */
 @media screen and (max-width: 376px) {
+  .player-container {
+      width: 95vw;
+  }
+  .img-container {
+      left: 29px;
+  }
   .title-container {
-    width: 85vh;
+    width: 85vw;
   }
 
   #title1 {
     font-size: 20px;
-    font-family: "Varela Round", sans-serif;
-    color: #1db954;
-    letter-spacing: 5px;
+    letter-spacing: 0px;
+    
   }
   #title-sub1 {
-    font-family: "Open Sans", sans-serif;
-    color: whitesmoke;
     font-size: 15px;
-    letter-spacing: 0px;
-  }
-
-  .player-container {
-    width: 80vw;
-  }
-
-  .img-container {
-    left: 29px;
+    
   }
 
   h2 {
-    font-size: 20px;
+      font-size: 20px;
   }
-
   h3 {
-    font-size: 15px;
+      font-size: 15px;
+  }
+  .player-controls {
+      /* top: -10px;
+      left: 100px; */
   }
 
-  .player-controls {
-    top: -10px;
-    left: 100px;
+  .extra-controls {
+
   }
 }
