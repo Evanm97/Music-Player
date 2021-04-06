@@ -1,5 +1,5 @@
-const image = document.querySelector("img");
-const title = document.getElementById("title");
+const image = document.getElementById("img");
+const title = document.getElementById("track-title");
 const artist = document.getElementById("artist");
 const music = document.querySelector("audio");
 const genre = document.getElementById("genre");
@@ -12,10 +12,8 @@ const playBtn = document.getElementById("play");
 const nextBtn = document.getElementById("next");
 const shuffleBtn = document.getElementById("shuffle");
 const repeatBtn = document.getElementById("repeat");
-// const soundBtn = document.getElementById("volume");
-// const playlistBtn =document.getElementById("switch");
-const nextGenButton = document.getElementById("nextGenre");
-const prevGenButton = document.getElementById("prevGenre");
+const nextGenreBtn = document.getElementById("next-genre");
+const prevGenreBtn = document.getElementById("prev-genre");
 
 // Booleans
 let shuffle = false;
@@ -24,19 +22,20 @@ let playing = false;
 let muted = false;
 
 let trackIndex = 0;
-
-const API_KEY = "MmU5NzI1NDctZWM0Zi00ZWVhLTg2YzMtNTIzNjNhNjRmMjI4";
-
 let genreIndex = 0;
+let imageIndex = 0;
+
+const numImages = 7;
 const genreArray = ["Pop", "Electronic", "Indie-Pop", "Rock", "Pop-Punk", "Hip-Hop", "Alt-Punk"];
 const genreIds = [115, 71, 398, 5, 397, 146, 33];
 
-let apiUrl =
-  `https://api.napster.com/v2.2/genres/g.115/tracks/top?apikey=${API_KEY}`;
+const apiKey = "MmU5NzI1NDctZWM0Zi00ZWVhLTg2YzMtNTIzNjNhNjRmMjI4";
+
+let apiUrl = `https://api.napster.com/v2.2/genres/g.115/tracks/top?apikey=${apiKey}`;
 let trackArray = [];
 
 // Play
-function playSong() {
+function playTrack() {
   playing = true;
   playBtn.classList.replace("fa-play", "fa-pause");
   playBtn.setAttribute("title", "Pause");
@@ -44,7 +43,7 @@ function playSong() {
 }
 
 // Pause
-function pauseSong() {
+function pauseTrack() {
   playing = false;
   playBtn.classList.replace("fa-pause", "fa-play");
   playBtn.setAttribute("title", "Play");
@@ -52,9 +51,8 @@ function pauseSong() {
 }
 
 // Update DOM
-function loadSongFromApiData(trackData) {
+function loadTrackFromApiData(trackData) {
   if (trackData) {
-    console.log("TRACK-DATA", trackData);
 
     if (trackData.name.length > 20 || trackData.artistName.length > 25) {
       reduceFontSize(trackData);
@@ -73,11 +71,12 @@ function loadSongFromApiData(trackData) {
   }
 }
 
+// Replaces Null Images with a Default Image
 function fixImage() {
-  console.log("shit image")
-  image.src = "no-music-cover.png"
+  image.src = "images/no-music-cover.png"
 }
 
+// Reduces the Font Size for Titles/Artists that are Too Long
 function reduceFontSize(trackData) {
   if (trackData.name.length > 25 || trackData.artistName.length > 35) {
     title.classList.add("xl-title");
@@ -88,6 +87,7 @@ function reduceFontSize(trackData) {
   }
 }
 
+// Resets Font Size to the Default
 function resetFontSize() {
   title.classList.remove("long-title");
   artist.classList.add("long-artist");
@@ -95,74 +95,78 @@ function resetFontSize() {
   artist.classList.add("xl-artist");
 }
 
-//fetch songs
-async function fetchSongs(url) {
+// fetch tracks
+async function fetchTracks(url) {
   let trackArr = [];
-  console.log(trackArr)
   try {
     const response = await fetch(url);
     trackArr = await response.json();
   } catch (error) {
-    console.log("Error fetching data :" + error);
   }
 
   trackArray = trackArr.tracks;
   return trackArr.tracks;
 }
 
-// function for previous song
-function prevSong() {
+// function for previous track
+function prevTrack() {
   trackIndex <= 0 ? (trackIndex = trackArray.length - 1) : trackIndex--;
 
-  loadSongFromApiData(trackArray[trackIndex]);
-  playSong();
+  loadTrackFromApiData(trackArray[trackIndex]);
+  playTrack();
 }
 
-function repeatSong() {
-  loadSongFromApiData(trackArray[trackIndex]);
-  playSong();
+function repeatTrack() {
+  loadTrackFromApiData(trackArray[trackIndex]);
+  playTrack();
 }
 
-// Function for next song
-function nextSong() {
+// Function for next track
+function nextTrack() {
   if (repeat) {
-    repeatSong();
+    repeatTrack();
   } else {
     trackIndex < trackArray.length - 1 ? trackIndex++ : (trackIndex = 0);
     if (shuffle) {
-      loadSongFromApiData(
+      loadTrackFromApiData(
         trackArray[Math.floor(Math.random() * trackArray.length)]
       );
     } else {
-      loadSongFromApiData(trackArray[trackIndex]);
+      loadTrackFromApiData(trackArray[trackIndex]);
     }
-    playSong();
+    playTrack();
   }
 }
 
+// Selects correct shuffle button to display
 function shuffleBoolean() {
   if (shuffle) {
-    shuffleBtn.setAttribute("style", "color: pink");
+    shuffleBtn.setAttribute("style", "color: whitesmoke");
     shuffle = false;
   } else {
     shuffleBtn.setAttribute("style", "color: #1DB954");
     shuffle = true;
+    repeatBtn.setAttribute("style", "color: whitesmoke");
+    repeat = false;
   }
 }
 
+// Selects correct repeat button to display
 function repeatBoolean() {
   if (repeat) {
-    repeatBtn.setAttribute("style", "color: pink");
+    repeatBtn.setAttribute("style", "color: whitesmoke");
     repeat = false;
   } else {
     repeatBtn.setAttribute("style", "color: #1DB954");
     repeat = true;
+    shuffleBtn.setAttribute("style", "color: whitesmoke");
+    shuffle = false;
   }
 }
 
-// On Load - Select First Song
-trackArray = fetchSongs(apiUrl).then((trackArray) => {
-  loadSongFromApiData(trackArray[0]);
+// On Load - Select First Track
+trackArray = fetchTracks(apiUrl).then((trackArray) => {
+  loadTrackFromApiData(trackArray[0]);
 });
 
 // Update Progress Bar & Time
@@ -200,53 +204,48 @@ function setProgressBar(e) {
   music.currentTime = (clickX / width) * duration;
 }
 
-// function muteSound() {
-//   if (muted) {
-//     music.volume = 1;
-//     soundBtn.classList.replace("fa-volume-mute", "fa-volume-up");
-//     soundBtn.setAttribute("title", "Mute");
-//     muted = false;
-//   } else {
-//     music.volume = 0;
-//     soundBtn.classList.replace("fa-volume-up", "fa-volume-mute");
-//     soundBtn.setAttribute("title", "Unmute");
-//     muted = true;
-//   }
-// }
-
-
+// Selects next music genre 
 function nextGenre() {
   genreIndex < genreArray.length - 1 ? genreIndex++ : (genreIndex = 0);
-  apiUrl = `https://api.napster.com/v2.2/genres/g.${genreIds[genreIndex]}/tracks/top?apikey=${API_KEY}`;
+  apiUrl = `https://api.napster.com/v2.2/genres/g.${genreIds[genreIndex]}/tracks/top?apikey=${apiKey}`;
 
-  trackArray = fetchSongs(apiUrl).then((trackArray) => {
-    loadSongFromApiData(trackArray[0]);
-    playSong();
+  trackArray = fetchTracks(apiUrl).then((trackArray) => {
+    loadTrackFromApiData(trackArray[0]);
+    playTrack();
+
+    // Changes background image
+    imageIndex < numImages - 1 ? imageIndex++ : (imageIndex = 0);
+    body.style.backgroundImage = `url('images/${imageIndex}.png')`;
   });
 }
 
-
+// Selects the previous music genre
 function prevGenre() {
   genreIndex <= 0 ? (genreIndex = genreArray.length - 1) : genreIndex--;
-  apiUrl = `https://api.napster.com/v2.2/genres/g.${genreIds[genreIndex]}/tracks/top?apikey=${API_KEY}`;
+  apiUrl = `https://api.napster.com/v2.2/genres/g.${genreIds[genreIndex]}/tracks/top?apikey=${apiKey}`;
 
-  trackArray = fetchSongs(apiUrl).then((trackArray) => {
-    loadSongFromApiData(trackArray[0]);
-    playSong();
+  trackArray = fetchTracks(apiUrl).then((trackArray) => {
+    loadTrackFromApiData(trackArray[0]);
+    playTrack();
+
+    // Changes background image
+    imageIndex <= 0 ? (imageIndex = numImages - 1) : imageIndex--;
+    body.style.backgroundImage = `url('images/${imageIndex}.png')`;
   });
 }
 
 
 // Event Listeners
-music.addEventListener("ended", nextSong);
+music.addEventListener("ended", nextTrack);
 music.addEventListener("timeupdate", updateProgressBar);
 progressContainer.addEventListener("click", setProgressBar);
+image.addEventListener("error", fixImage);
 
-playBtn.addEventListener("click", () => (playing ? pauseSong() : playSong()));
-prevBtn.addEventListener("click", prevSong);
-nextBtn.addEventListener("click", nextSong);
+// Button Event Listeners
+playBtn.addEventListener("click", () => (playing ? pauseTrack() : playTrack()));
+prevBtn.addEventListener("click", prevTrack);
+nextBtn.addEventListener("click", nextTrack);
 shuffleBtn.addEventListener("click", shuffleBoolean);
 repeatBtn.addEventListener("click", repeatBoolean);
-
-nextGenButton.addEventListener("click", nextGenre);
-prevGenButton.addEventListener("click", prevGenre);
+nextGenreBtn.addEventListener("click", nextGenre);
+prevGenreBtn.addEventListener("click", prevGenre);
