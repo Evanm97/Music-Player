@@ -5,11 +5,14 @@ html {
 }
 
 body {
-  margin: 0;
+  margin: auto;
   min-height: 100vh;
-  background: url("https://cdn.wallpapersafari.com/5/1/LYKSli.jpg");
+  background: url("images/0.png");
+  transition: all 2s linear;
+  backface-visibility: hidden;
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: center center;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -18,14 +21,18 @@ body {
   font-size: 12px;
 }
 
-#title1 {
-  /* padding: 35px; */
+.dummy-images {
+  display: none;
+}
+
+.title {
   font-size: 35px;
   font-family: "Varela Round", sans-serif;
   color: #1db954;
-  letter-spacing: 5px;
+  letter-spacing: 0px;
 }
-#title-sub1 {
+
+.title-sub {
   font-family: "Open Sans", sans-serif;
   color: whitesmoke;
   font-size: 20px;
@@ -33,12 +40,13 @@ body {
 }
 
 .title-container {
+  text-align: center;
   width: 550px;
   height: 150px;
 }
 
 .player-container {
-  height: 525px;
+  height: 520px;
   width: 400px;
   border-radius: 20px;
   box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2);
@@ -81,12 +89,11 @@ h3 {
   margin: 0;
 }
 
-.title-holder {
+.track-title-container {
   height: 25px;
-
 }
 
-.artist-holder {
+.artist-container {
   height: 20px;
 }
 
@@ -103,7 +110,6 @@ h3 {
   margin: 10px 0 0;
 }
 
-/* Progress */
 .progress-container {
   background: lightslategray;
   border-radius: 5px;
@@ -114,7 +120,7 @@ h3 {
 }
 
 .progress {
-  background: white;
+  background: #1db954;
   border-radius: 5px;
   height: 100%;
   width: 0%;
@@ -128,65 +134,52 @@ h3 {
   justify-content: space-between;
 }
 
-/* Controls */
 .player-controls {
   position: relative;
-  top: -15px;
+  top: -25px;
   width: 100%;
 }
 
 .extra-controls {
   position: relative;
-  margin-top: 5px;
-  width: 100%;
+  margin: -5px 5px 0 5px;
+  width: 390px;
   height: 40px;
   display: flex;
   justify-content: space-between;
+  background-color: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(15px);
+  border-radius: 10px;
 }
 
-#genre {
-  font-size: 25px;
-  color: white;
+.genre {
+  padding: 7.5px;
+  font-size: 22px;
   margin-left: 40px;
 }
 
 .fas {
   font-size: 30px;
-  color: white;
+  color: whitesmoke;
   margin-left: 40px;
   cursor: pointer;
   user-select: none;
 }
 
-.fas.fa-sliders-h {
-  font-size: 30px;
-  cursor: pointer;
-  user-select: none;
-
-}
-
 .fas.fa-angle-right {
   font-size: 30px;
-  cursor: pointer;
-  user-select: none;
   margin-right: 40px;
+  padding: 5px;
 }
 
-.fas.fa-volume-up, .fas.fa-volume-mute, .fas.fa-angle-left {
+.fas.fa-angle-left {
   font-size: 30px;
-  cursor: pointer;
-  user-select: none;
-  /* margin-left: 50px; */
-  color: whitesmoke;
+  padding: 5px;
 }
 
 .fas.fa-redo,
 .fas.fa-random {
   font-size: 30px;
-  color: pink;
-  /* margin-right: 30px; */
-  cursor: pointer;
-  user-select: none;
 }
 
 .fas:hover {
@@ -194,44 +187,53 @@ h3 {
 }
 
 .main-button {
+  color: whitesmoke;
   font-size: 40px;
   position: relative;
   top: 3px;
 }
 
-@media screen and (max-width: 376px) {
+@media screen and (max-width: 414px) {
+  body {
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
   .player-container {
-      width: 95vw;
+    width: 95vw;
   }
+
   .img-container {
-      left: 29px;
+    left: 29px;
   }
+
   .title-container {
-    width: 85vw;
-  }
-
-  #title1 {
-    font-size: 20px;
-    letter-spacing: 0px;
-    
-  }
-  #title-sub1 {
-    font-size: 15px;
-    
-  }
-
-  h2 {
-      font-size: 20px;
-  }
-  h3 {
-      font-size: 15px;
-  }
-  .player-controls {
-      /* top: -10px;
-      left: 100px; */
+    display: none;
   }
 
   .extra-controls {
+    width: 92vw;
+    margin: -1px 5px 0 5px;
+  }
 
+  h2 {
+    font-size: 20px;
+  }
+
+  h3 {
+    font-size: 15px;
+  }
+
+  .fas {
+    font-size: 20px;
+  }
+
+  .main-button {
+    font-size: 30px;
+  }
+
+  .fas.fa-redo,
+  .fas.fa-random {
+    font-size: 20px;
   }
 }
