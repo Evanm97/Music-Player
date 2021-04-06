@@ -5,33 +5,47 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Music Player</title>
-    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="icon" type="image/png" href="images/favicon.png" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css" />
     <link rel="stylesheet" href="style.css" />
 </head>
 
-<body>
+<body id="body">
 
     <div class="title-container">
-        <h1 id="title1">JS Music Player <span id="title-sub1">with Napster API <i class="fab fa-napster"></i></span>
+        <h1 class="title" id="title"> <i class="fab fa-js-square"></i> Music Player <span class="title-sub"
+                id="title-sub">with Napster API <i class="fab fa-napster"></i></span>
         </h1>
+    </div>
+
+    <!-- Preloading to prevent "Flickering" -->
+    <div class="dummy-images">
+        <img class="dummy" src="images/0.png" />
+        <img class="dummy" src="images/1.png" />
+        <img class="dummy" src="images/2.png" />
+        <img class="dummy" src="images/3.png" />
+        <img class="dummy" src="images/4.png" />
+        <img class="dummy" src="images/5.png" />
+        <img class="dummy" src="images/6.png" />
     </div>
 
     <div class="player-container">
 
         <!-- Song -->
         <div class="img-container" id="img-container">
-            <img src="" onerror="fixImage()"/>
+            <img id="img" src="" />
         </div>
 
-        <div class="title-holder">
-            <h2 id="title"></h2>
+        <!-- Song & Artist Info -->
+        <div class="track-title-container">
+            <h2 id="track-title"></h2>
         </div>
 
-        <div class="artist-holder">
+        <div class="artist-container">
             <h3 id="artist"></h3>
         </div>
 
+        <!-- Music -->
         <audio>
             <source src="" type="audio/mpeg" />
             Your browser does not support the audio element.
@@ -56,13 +70,9 @@
         </div>
 
         <div class="extra-controls">
-            <!-- <i class="fas fa-volume-up" id="volume" title="Mute"></i>
-            <i class="fas fa-sliders-h" id="switch" title="Switch Playlist"></i> -->
-            <!-- <i class="fas fa-backward" id="prev" title="Previous"></i> -->
-            <i class="fas fa-angle-left" id="prevGenre" title="Previous Genre"></i>
-            <span id="genre"></span>
-            <i class="fas fa-angle-right" id="nextGenre" title="Next Genre"></i>
-            <!-- <i class="fas fa-forward" id="next" title="Next"></i> -->
+            <i class="fas fa-angle-left" id="prev-genre" title="Previous Genre"></i>
+            <span class="genre" id="genre"></span>
+            <i class="fas fa-angle-right" id="next-genre" title="Next Genre"></i>
         </div>
     </div>
 
