@@ -234,7 +234,6 @@ function prevGenre() {
   });
 }
 
-
 // Event Listeners
 music.addEventListener("ended", nextTrack);
 music.addEventListener("timeupdate", updateProgressBar);
